@@ -1,0 +1,141 @@
+생활코딩 – JavaScript
+
+16. 조건문 
+-	boolean을 활용해서 조건에 따라 실행되는 코드만들기
+-	if 조건문이 ‘true’일 경우 else문 코드는 실행되지 않음
+-	boolean의 값에 따라서 실행되는 코드가 바뀜
+
+17. 조건문의 활용
+-	버튼만들기 <input type=”button” value=”night”>
+-	버튼의 value값이 “night”라면 버튼을 눌럿을때 야간모드로 css속성을 바꿔주고, “night”가 아니라면 주간모드로 css속성을 바꿔주는 버튼만들기
+
+-	버튼의 value값 가져오기
+Document.querySelctor(‘#night_day’).value -> “night”
+위를 활용해서 조건문 설정
+<input id=”night_day” type=”button” value=”night” onclick=”
+ If (Document.querySelctor(‘#night_day’).value === “night”
+) {
+  Document.querySelector(‘body’).style.backgroundcolor =”black”;
+Document.queryselector(‘body’).sytle.color=”white”;
+Document.querySelctor(‘#night_day’).value = “day”; //css 속성 바꾼 후 value 값 바꿔주기
+ } else {
+  Document.querySelctor(‘body’).style.backgroundcolor=”white”;
+Document,querySelector(‘body’).sytle.color=”black”;
+Document.querySelctor(‘#night_day’).value = “night”;
+}”>
+
+18. 리팩토링 (refactoring): 중복의 제거
+-	비효율적인 코드를 개선 -> 유지보수가 쉬워짐, 성능이 좋아짐
+-	위의 코드를 개선해보자:
+1)	onclick 이후의 이벤트 코드의 대상은 모두 자기 자신을 가리키고 있음 -> this 사용
+2)	queryselector(‘body’) 태그 중복 사용되므로 변수에 저장 -> var target = document.queryselector(‘body’)
+<input id=”night_day” type=”button” value=”night” onclick=”
+ var target = document.queryselector(‘body’)
+ If (Document.querySelctor(‘#night_day’) This.value === “night”
+) {
+  Document.querySelector(‘body’)target.style.backgroundcolor =”black”;
+Document.queryselector(‘body’)target.stylle.color=”white”;
+This.value = “day”; //css 속성 바꾼 후 value 값 바꿔주기
+ } else {
+  Document.querySelctor(‘body’)target.style.backgroundcolor=”white”;
+Document,querySelector(‘body’)target.style.color=”black”;
+This.value = “night”;
+}”>
+	중복되는 모든 코드는 없애려고 노력하자
+
+19. 반복문 예고: 웹페이지의 모든 링크의 속성을 바꿔야할 경우, 반복문을 사용할 수 있음
+-	모든 a링크를 불러들여 번수(배열로서)에 저장한 후 반복문 설정
+
+20. 배열(array): 데이터를 성격에 따라 분류하여 관리
+-	배열만들기: 대괄호 [ ] 안에 데이터들을 입력하여 만듦
+var coworkers = [“egoing”, “leezche”]
+-	배열의 값 가져오기: 인덱스를 활용해서 가져옴
+Coworkers[0] => “egoing”
+-	배열의 값 갯수: 
+Coworkers.length => 2
+-	배열에 값 추가하기:
+Coworkers.push(“duru”) 
+
+21. 반복문(loop): 순서대로 실행되는 프로그램의 실행 순서를 제어
+- 반복문의 종료 시점을 잘 정해야함
+Var I = 0;
+While (I < 3) { //코드가 한번씩 실행될 때마다 i의 값이 1씩 증가하고 3보다 작지 않으면 종료되고 반복문 다음의 코드가 실행됨
+	실행할 코드 1
+	실행할 코드 2
+	I = I + 1;
+}
+
+22. 배열과 반복문
+- 연관된 데이터를 배열로 만들어 순차적으로 아이템을 꺼내서 프로그램을 실행되도록 함
+- var fruits = [“banana”, “mango”, “orange”, “grape”]
+<ul>
+<script>
+Var I = 0;
+While (I < 4) {
+Document.write(‘<li>’ + fruits[i] + ‘</li>’);
+I = I + 1;
+}
+</script>
+</ul>
+
+-	위 코드는 데이터가 바뀔 때마다 로직(조건문)까지 함께 바꿔줘야함..
+-	“I < 4” -> fruits.length
+
+23. 배열과 반복문의 활용
+- document.querySelector(“a”)를 하면 맨 첫 번째 a 링크만 가져옴
+- document.querySelectorAll(‘a’) -> [a, a, a, a] 모든 a링크를 가져왔으니 변수에 저장
+Var alist = document.querySelctorAll(‘a’);
+Var I = 0;
+While (I < alist.length) {
+  alist[i].style.color=”powderblue” //반복문이 지날때마다 배열의 각각의 아이템을 가리킴
+  I = I + 1;
+}
+ 
+24. 함수 예고
+- 코드가 많아질 경우 함수를 이용해서 정리정돈
+- input 버튼, 온클릭 이벤트에 대한 조건문, 변수 정의 등 많은 코드들을 함수로 빼서 정의한 후, 그 함수명을 버튼에서 정의해줌
+
+25. 함수(function)
+- 기본 문법
+Function 함수 이름() {
+  재사용하고 싶은 코드;
+}
+	함수를 불러낼 때마다 재사용하고 싶은 코드를 실행
+
+28. 함수의 활용: 리팩토링에서 중요한 역할을 함
+- 중복되는 코드를 빼서 함수로 만듦
+Function nightDayHandler() {
+var target = document.queryselector(‘body’)
+ If (This.value === “night”
+) {
+ target.style.backgroundcolor =”black”;
+target.stylle.color=”white”;
+This.value = “day”; //css 속성 바꾼 후 value 값 바꿔주기
+ } else {
+target.style.backgroundcolor=”white”;
+target.style.color=”black”;
+This.value = “night”;
+}”>
+}
+<input type =”button” value=”night” onclick=”nightDayHandler();”>
+	이렇게 하면 nightDayHandler 함수 내에 정의된 “this”가 input 버튼을 가르키지 않고 전역객체를 가르키게 되어 함수가 제대로 동작하지 않음! (전역객체가 뭔지 나중에 배우자)
+	This의 값이 input버튼을 가리키게 하기 위해서 함수가 실행될때 this값을 줌
+<input type =”button” value=”night” onclick=”nightDayHandler(this);”>
+function nightDayHandler(self) {// self라는 이름의 매개변수를 정의한 후 this -> self로 변경
+	var target = document.queryselector(‘body’)
+ If (self.value === “night”
+) {
+ target.style.backgroundcolor =”black”;
+target.stylle.color=”white”;
+self.value = “day”; //css 속성 바꾼 후 value 값 바꿔주기
+ } else {
+target.style.backgroundcolor=”white”;
+target.style.color=”black”;
+self.value = “night”;
+}”>
+}
+
+29. 객체(object) 예고
+- 함수라는 기반 위에 존재 
+- 코드를 정리하는 함수들이 많아지면 객체를 이용해서 정리: 서로 연관된 함수와 변수를 같은 이름으로 그루핑
+- 객체에 속해있는 함수는 함수가 아니라 ‘메소드’라 부름
