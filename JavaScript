@@ -138,4 +138,86 @@ self.value = “night”;
 29. 객체(object) 예고
 - 함수라는 기반 위에 존재 
 - 코드를 정리하는 함수들이 많아지면 객체를 이용해서 정리: 서로 연관된 함수와 변수를 같은 이름으로 그루핑
+-> 이때까지 만든 코드 (하기 이미지 참조)를 중복된 코드를 없애서 최대한 함수로 만든 후, 함수들을 정리해야할 단계까지 일단 만들어보기
+1) var alist, 반복문을 function setColor(color) {} 로 만든 다음 코드 붙여넣기 - style.color = color로 변경
+2) body태그의 폰트색을 바꾸는 var target, if조건문을 function setColor(color) {} 코드 붙여넣기 
+-> 스타일태그의 색깔을 바꾸는 “setColor”라는 함수명이 중복됨, 이런 경우 후에 지정된 함수가 앞의 함수를 덮어쓰게 됨. 후에 함수가 많아지면 모든 함수의 이름을 기억할 수가 없기 때문에 함수명을 최대한 직관적으로, 명확히 지정해주는것이 좋음 -> 1)의 함수명을 linksSetColor(color)로, 2)의 함수명을 BodySetColor(color)로 변경
+3) body태그의 배경색을 바꾸는 function BodySetBackgroundColor(color) 함수 만들기 
+-> 객체를 이용하면 위의 함수들을 더 깔끔하게 정리할 수 있음: ‘body’라는 객체를 만들어 body.setBackgroundCOlor(‘black’), body.setColor(‘white’) 등으로 변경 -> 객체 만들기는 33.객체의 활용에서!
 - 객체에 속해있는 함수는 함수가 아니라 ‘메소드’라 부름
+ 
+
+30. 객체 쓰기와 읽기 
+- 배열은 정보를 담는 그릇이며 동시에 정보가 순서대로 저장된다는 특징이 있음
+- 객체는 정보를 담으나 순서대로 저장되지 않음, 그러나 어떤 순서가 없어도 상자의 정보를 꺼내 쓸려면 정보의 이름이 필요.
+- 객체 만들기: object literal을 만드려면 중괄호를 씀
+Var coworkers = {
+“programmer”: “egoing”, // “egoing”이라는 정보를 저장하기 위해 프로그래머라는 이름을 붙여주는 것!
+“designer”: “leezche” 
+};
+Document.write(“programmer : “ + coworkers.programmer); -> “egoing”
+// coworkers.programmer 객체의 정보에 접근하는 방법(object access operator)
+-	객체에 정보 추가하려면? 
+Coworkers.bookkeeper = “duru”;
+Coworkers.[“data scientist”] = “taeho”;
+Document.write(“data scientis : “ + coworkers.[“data scientist”] +”<br>”); -> data scientist: taeho
+
+31. 객체와 반복문
+- 객체 내의 정보 다 가져오려면? 반복문쓰기!
+- 객체에서는 반복문을 어떻게 쓰나? For in 구문써보기
+For ( var key in coworkers(객체 이름) ) // coworkers라는 변수가 가리키는 객체의 key값(위의 예에서 정보의 이름, programmer, designer..)을 가져오는 반복문 -> coworkers의 key 값 하나하나마다 코드를 실행해줌
+ Document.write(key + “<br>”);
+}. 
+	Programmer
+Designer
+Bookkeeper
+Data scientist
+-	Key값을 인덱스로 주면? 객체의 키값에 해당하는 데이터를 가져옴
+For (var key in coworkers) {
+Document.write(coworkers[key] + “<br>”)
+}
+	Egoing
+Leezche
+Duru
+Taeho
+-	하지만 객체는 순서를 보장하지는 않으므로 위의 값들은 순서대로 나오지 않을 수 있음
+
+32. 객체프로퍼티와 메소드
+- 객체는 문자, 배열, 숫자, 함수 등 다양한 것을 담을 수 있음
+- 객체에 함수 담아보기 (method)
+Coworkers.showAll = function() {.  // 객체 coworkers에 showAll이라고 하는 메소드담기!
+	For (var key in this) { // coworkers라는 객체 이름이 메소드에 있으면 데이터를 제대로 못 불러올수 있으므로 coworkers -> this로 변경
+Document.write(key +” : “ + this[key] + “<br>”);
+}
+}
+Coworkers.showAll();
+	객체 저장된 모든 정보를 가져옴
+-	객체에 소속된 변수는 “프로퍼티”라고 함
+
+33. 객체의 활용
+- 객체의 예고에서 제대로 정리하지 않았던 코드들 (하기 이미지)을 객체개념을 활용하여 정리하기
+ 
+
+-	바디태그의 속성색을 바꿔주는 함수를 모은 객체 body를 만듬
+ 
+
+-	모든 링크의 색을 바꿔주는 코드도 “links”로 객체화하기
+-	객체가 많아지면 어떻게 객체들을 정리할까?
+
+34. 파일로 쪼개서 정리 정돈하기
+- 연관된 코드들을 파일로 묶어서 그루핑
+- 웹페이지마다 있는 스크립트태그의 자바스크립트 태그를 수정해야할 경우 각 페이지마다 들어가서 코드를 변경하는 것이 어려움 -> 자바스크립트 코드만 저장하고 있는 스크립트파일을 만든 후 각페이지에서 <script src=”파일이름.js”> 로 연결시켜 줌 
+- 네트워크 트래픽 절감, 캐쉬 절약하여 효율적이고 비용절감!
+
+35. 라이브러리와 프레임워크: 다른 사람의 생산물을 소비해서 나의 소프트웨어 생산하기
+- library: 내가 만들고자 하는 프로그램에 필요한 부품이 되는 것들이 잘 정돈되어 있는 소프트웨어, jQuery
+- framework: 반제품 같은 것. 만들고자 하는 것에 필요한, 공통이 되는 부분을 이미 만들어져 있는 것을 사용하는 것
+- jQuery 사용해보기
+36. UI vs API
+- UI: user interface, 사용자가 시스템을 제어하기 위해서 사용하는 조작 장치(click 버튼같은 것)
+- API: application programming interface, 애플리케이션을 만들기 위해서 프로그래밍을 할 때 사용하는 조작장치(함수 alert을 사용해서 버튼을 클릭하면 경고창을 띄우는 기능), 프로그래머는 자바스크립트를 사용하여 API를 결합하여 애플리케이션(응용 프로그램)을 만듦
+
+37. 수업을 마치며
+- 프로젝트를 시작하려면? 모든 개념을 사용하려고 하지말고, 꼭 필요한 최소한의 도구를 사용하면 됨
+- 순서에 따라서 실행되어야 하는 명령들이 실행되도록 하기
+- 앞으로 마주치게 될 한계: document 객체를 좀 더 자세히 살펴보기, DOM 살펴보기, window 객체 살펴보기, ajax: 웹페이지를 리로드하지 않고 정보를 변경하고 싶을때, cookie 웹페이지가 리로드되어도 현재 상태를 유지하고 싶을때: 사용자를 위한 개인화된 서비스 제공 offline web application 인터넷이 끊겨도 동작하는 웹페이지 만들려면, webRTC: 화상통신 웹 앱을만들고 싶으면, speech: 음성인식, 음성으로 정보 전달, webGL 3차원 그래픽으로 게임만드려면, webVR 가상현실  
